@@ -46,10 +46,20 @@ fun main(){
     //Recorrer los datos, pasa por los datos de uno en uno
     pruebaArray.forEach {
         //hace lo que haya dentro tantas veces como posiciones haya en total
+        //It comprueba los datos que hay dentro del array
         println(it)
 
     }
     //Otras operaciones
+
+    //Comprueba si uno de los casos se cumple dentro del Array usando .any
+    val comprovador = pruebaArray.any { it == "Dani" || it == "Paco" || it == "Pepe" }
+    if (comprovador){
+        println("Tu nombre esta en la lista")
+    }else{
+        println("Tu nombre no esta en la lista")
+    }
+
 
     //Cuenta el numero de posiciones que hay
     println(pruebaArray.count())
