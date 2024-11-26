@@ -1,3 +1,5 @@
+@file:Suppress("UNREACHABLE_CODE")
+
 package Apuntes
 
 import java.util.Scanner
@@ -51,8 +53,8 @@ fun main() {
                 var operacio: Int = 0
                 do {
                     println("Introdueix dos numeros per fer operacions")
-                    val num1 = correctorEnter(missatge = "Introdueix el primer numero: ")
-                    val num2 = correctorEnter(missatge = "Introdueix el segon numero: ")
+                    var num1 = correctorEnter(missatge = "Introdueix el primer numero: ")
+                    var num2 = correctorEnter(missatge = "Introdueix el segon numero: ")
                     println(SUBMENU)
                     operacio = correctorEnter(missatge = "Tria una opcio: ")
                     when (operacio) {
@@ -63,25 +65,25 @@ fun main() {
 
                         2 -> {
                             val resta: Int = resta(num1, num2)
-                            println("La suma es $resta")
+                            println("La resta es $resta")
 
                         }
 
                         3 -> {
                             val multiplicacio: Int = multi(num1, num2)
-                            println("La suma es $multiplicacio")
+                            println("La multiplicacio es $multiplicacio")
 
                         }
 
                         4 -> {
-                            if (num1!=0 || num2 != 0){
-                                val divisio: Int = divisio(num1, num2)
-                                println("La suma es $divisio")
-                            }else{
+                            do {
                                 println("No es pot dividir per zero")
-                            }
+                                num1 = correctorEnter(missatge = "Torna a introduir el primer numero: ")
+                                num2 = correctorEnter(missatge = "Torna a introduir el segon numero: ")
 
-
+                            }while (num1 == 0 || num2 == 0)
+                            val divisio: Int = divisio(num1, num2)
+                            println("La divisio es $divisio")
                         }
                         else -> {
                             print("Opcio invalida ")
@@ -97,9 +99,18 @@ fun main() {
             }
 
             6 -> {
-                print("Introdueix un numero per saber el seu quadrat: ")
-                correctorEnter(missatge = "Introdueix un numero")
-                cuadrat(num1 = LECTOR.nextInt())
+                //do {
+                print("Ets vip (si/no)? ")
+                val esVip: String = LECTOR.nextLine().lowercase()
+                //}while (esVip !="si".lowercase() || esVip !="no".lowercase())
+                val producte = correctorFloat(missatge = "Introdueix el preu del producte: ")
+                if (esVip =="si" || producte >=200) {
+                    val descompteFet = descompte(preu = producte)
+                    println("El descompte és de : $descompteFet€")
+                }else{
+                    println("No tens descompte")
+                }
+
             }
 
             7 -> {
@@ -129,6 +140,7 @@ fun main() {
 
 }
 
+
 //Control d'errors
 fun correctorEnter(missatge:String): Int {
 
@@ -136,7 +148,7 @@ fun correctorEnter(missatge:String): Int {
         print(missatge)
         val valorCorrecte = LECTOR.hasNextInt()
         if (!valorCorrecte) {
-            print("ERROR: Introdueix un número: ")
+            println("ERROR: Introdueix un número ")
             LECTOR.nextLine()
         }
     } while (!valorCorrecte)
@@ -149,7 +161,7 @@ fun correctorFloat(missatge:String): Float {
         print(missatge)
         val valorCorrecte = LECTOR.hasNextFloat()
         if (!valorCorrecte) {
-            print("ERROR: Introdueix un número: ")
+            println("ERROR: Introdueix un número ")
             LECTOR.nextLine()
         }
     } while (!valorCorrecte)
@@ -185,7 +197,6 @@ fun volumEsfera(radi: Float): Float {
 
 //4
 fun suma(num1: Int, num2: Int): Int {
-
     return num1 + num2
 }
 
@@ -210,4 +221,8 @@ fun positiu(num1: Int): Boolean {
         positiu = true
     }
     return positiu
+}
+//6
+fun descompte(preu :Float): Float{
+    return preu * 20 / 100
 }
